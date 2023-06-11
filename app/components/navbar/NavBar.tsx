@@ -1,5 +1,6 @@
 'use client';
 import Container from '../Container';
+import Categories from './Categories/Categories';
 import Logo from './Logo';
 import Search from './Search';
 import UserMenu from './UserMenu';
@@ -21,6 +22,7 @@ export const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
           </div>
         </Container>
       </div>
+      <Categories />
     </div>
   );
 };
