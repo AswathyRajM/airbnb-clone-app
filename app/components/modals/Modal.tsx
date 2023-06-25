@@ -7,8 +7,8 @@ import Button from '../Button';
 interface ModalProps {
   isOpen?: boolean;
   title?: string;
-  body?: string;
-  footer?: string;
+  body?: React.ReactElement;
+  footer?: React.ReactElement;
   actionLabel: string;
   disabled?: boolean;
   secondaryActionLabel?: string;
