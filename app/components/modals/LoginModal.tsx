@@ -39,9 +39,15 @@ const LoginModal = () => {
         toast.success('Logged in');
         router.refresh();
         loginModal.onClose();
+        return;
       }
 
-      if (callback?.error) toast.error(callback.error);
+      if (callback?.error) {
+        if (callback?.error.length > 15) {
+          toast.error('Something went wrong!');
+          console.error(callback.error);
+        } else toast.error(callback.error);
+      } else toast.error('Something went wrong!');
     });
   };
 
