@@ -30,6 +30,7 @@ const RentModal = () => {
   // const [step, setStep] = useState(STEPS.CATEGORY);
   const [step, setStep] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
+  const [isImageLoading, setImageIsLoading] = useState(false);
 
   const {
     register,
@@ -51,6 +52,7 @@ const RentModal = () => {
           url: '',
           original_filename: '',
           asset_id: '',
+          public_id: '',
         },
       ],
       price: 1,
@@ -79,6 +81,14 @@ const RentModal = () => {
     });
   };
 
+  const removeImage = (asset_id: string) => {
+    const newImageSrc = imageSrc.filter(
+      (img: any) => img.asset_id !== asset_id
+    );
+
+    setCustomValue('imageSrc', newImageSrc);
+  };
+
   const onBack = () => {
     setStep((value) => value - 1);
   };
@@ -93,7 +103,7 @@ const RentModal = () => {
 
     axios
       .post('/api/listings', data)
-      .then(() => {
+      .then((res) => {
         toast.success('Listing created!');
         router.refresh();
         reset();
@@ -196,6 +206,9 @@ const RentModal = () => {
           value={imageSrc}
           onChange={(value) => setCustomValue('imageSrc', value)}
           fileLimit={4}
+          setIsLoading={setImageIsLoading}
+          isLoading={isImageLoading}
+          removeImage={removeImage}
         />
       </div>
     );
@@ -252,13 +265,14 @@ const RentModal = () => {
       isOpen={rentModal.isOpen}
       onClose={() => {
         reset();
-        rentModal.onClose;
+        rentModal.onClose();
       }}
       onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={STEPS.CATEGORY === step ? undefined : onBack}
       body={bodyContent}
+      disabled={isImageLoading}
     />
   );
 };

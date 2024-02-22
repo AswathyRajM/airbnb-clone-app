@@ -45,17 +45,18 @@ model Account{
   @@unique([provider,providerAccountId])
 }
 
+
 model Listing{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   description String
-  imageSrc String
+  imageSrc Json[] 
   createdAt DateTime @default(now())
   category String
   roomCount Int
   bathroomCount Int
   guestCount Int
-  locationValue Int
+  location Json
   userId String @db.ObjectId
   price Int
 
