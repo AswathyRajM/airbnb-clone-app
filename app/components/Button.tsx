@@ -3,7 +3,7 @@ import React from 'react';
 import { IconType } from 'react-icons';
 
 interface ButtonProps {
-  label: string;
+  label: string | React.ReactElement;
   disabled?: boolean;
   outline?: boolean;
   small?: boolean;

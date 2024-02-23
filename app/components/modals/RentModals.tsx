@@ -14,6 +14,7 @@ import CountrySelect from '../inputs/CountrySelect';
 import Counter from '../Counter';
 import ImageUploads from '../inputs/ImageUploads';
 import Input from '../inputs/Input';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 enum STEPS {
   CATEGORY = 0,
@@ -27,8 +28,7 @@ enum STEPS {
 const RentModal = () => {
   const router = useRouter();
   const rentModal = useRentModal();
-  // const [step, setStep] = useState(STEPS.CATEGORY);
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(STEPS.CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
   const [isImageLoading, setImageIsLoading] = useState(false);
 
@@ -120,9 +120,23 @@ const RentModal = () => {
   };
 
   const actionLabel = useMemo(() => {
-    if (step === STEPS.PRICE) return 'Create';
+    if (step === STEPS.PRICE)
+      return (
+        <p className='flex align-baseline justify-center gap-1 w-full'>
+          {isLoading ? (
+            <>
+              Creating
+              <span className='animate-spin p-1'>
+                <AiOutlineLoading3Quarters />
+              </span>
+            </>
+          ) : (
+            'Create'
+          )}
+        </p>
+      );
     return 'Next';
-  }, [step]);
+  }, [step, isLoading]);
 
   const secondaryActionLabel = useMemo(() => {
     if (step === STEPS.CATEGORY) return undefined;
@@ -272,7 +286,7 @@ const RentModal = () => {
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={STEPS.CATEGORY === step ? undefined : onBack}
       body={bodyContent}
-      disabled={isImageLoading}
+      disabled={isImageLoading || isLoading}
     />
   );
 };
