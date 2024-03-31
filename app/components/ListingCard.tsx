@@ -8,6 +8,7 @@ import { SafeUser } from '../types';
 import { useCountries } from '../hooks/useCountries';
 import { convertToString } from '../helpers/locationToString';
 import { getImageSrc } from '../helpers/getImageSrc';
+import HeartButton from './HeartButton';
 
 interface ListingCardProps {
   listing: Listing;
@@ -75,6 +76,9 @@ function ListingCard({
             src={imageSrc}
             className='object-cover h-full w-full group-hover:scale-110 transition'
           />
+          <div className='absolute top-3 right-3'>
+            <HeartButton />
+          </div>
         </div>
       </div>
     </div>
